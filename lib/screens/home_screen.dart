@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:notes/color.dart';
+import 'package:notes/model/note.dart';
 import 'package:notes/screens/add_note_screen.dart';
-import 'package:notes/colors.dart';
-import 'package:notes/screens/edit_note_screen.dart';
 
+import 'package:notes/screens/edit_note_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -11,117 +12,171 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> notes = ["First Note"];
+  List<Note> myNote = [
+    Note("title1", "content","https://st3.depositphotos.com/3433891/31776/i/450/depositphotos_317769338-stock-photo-young-hispanic-cool-woman-blue.jpg "),
+  ];
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGround,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: backGround,
-        title: Text("Your Notes", style: TextStyle(
-          fontWeight: FontWeight.w900,
-          fontSize: 33,
-          color: mainColor,
-        ),
-        ),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Text("Your Notes", style: TextStyle(fontSize: 33,
+              color: Colors.blue, fontWeight: FontWeight.w900),),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.list,
-              color: mainColor,
-              size: 30,
-            ),
-            onPressed: () {},
-          )
-        ],),
-      floatingActionButton: FloatingActionButton(onPressed: ()=> openAddNoteScreen(),
-        child: Icon(Icons.add),
-        backgroundColor: mainColor,
-      ),
-      body:
+            onPressed: (){},
+        icon: Icon(Icons.list,
+        color: Colors.blue,
+          size: 30,
+        ))
+        ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blue,
+          onPressed: () =>
+              openAddNewNote(),
 
-      ListView.builder(
-        itemCount: notes.length,
-        itemBuilder: (context, index) {
-          return buildNoteItem(index);
-        },
-      ),
+          child: Icon(Icons.add),
+
+        ),
+        body: ListView.builder(
+            itemCount: myNote.length,
+            itemBuilder: (context, index) {
+              return buildItem(index);
+            }
+        )
 
     );
   }
 
-  Widget buildNoteItem(int index) {
+  Widget buildItem(int index) {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
-      width: double.infinity,
       decoration: BoxDecoration(
-          color: contaierColor,
-          borderRadius: BorderRadius.circular(15)
+        color: contaierColor,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              notes[index],
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-
-            ),
+            padding: const EdgeInsets.all(8),
+            child:
+            Text(
+              myNote[index].saveTitle,
+              style: TextStyle(
+                  color:
+                  myNote[index].saveTitle == 'null'
+                      ? contaierColor :
+                  Colors.red,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20),),
+          ),
+          Image.network(
+            myNote[index].image,
+            width:double.infinity,
+            height: 150,
+            fit: BoxFit.fill,),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child:
+            Text(
+              myNote[index].title
+              , style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 20),),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child:
+            Text(
+              myNote[index].content
+              , style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 20),),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    notes.removeAt(index);
-                    setState(() {
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: StadiumBorder(),
+                    ),
+                    onPressed: () {
+                      myNote.removeAt(index);
+                      setState(() {
 
-                    });
-                  },
-                  icon: Icon(Icons.delete),
-                  label: Text("Delete"),
-                  style: ElevatedButton.styleFrom(shape: StadiumBorder(),
-                      backgroundColor: deleteColor),),
+                      });
+                    },
+                    icon: Icon(Icons.delete),
+                    label: Text("Delete")),
               ),
               SizedBox(width: 10,),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () => editNote(index), icon: Icon(Icons.edit), label: Text("Edit"),
-                  style: ElevatedButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
                       shape: StadiumBorder(),
-                      backgroundColor: editColor),),
+                    ),
+                    onPressed: () {
+                      editNote(index);
+                    },
+                    icon: Icon(Icons.edit),
+                    label: Text("Edit")),
               ),
-
             ],)
-        ],),);
+
+        ],),
+    );
   }
 
- void openAddNoteScreen() {
-    Navigator.push(context, MaterialPageRoute(builder:
-        (context) => AddNoteScreen(),
-    )).then((value) => addNewNote(value),);
+  void openAddNewNote() {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => AddNoteScreen(),
+    )
+    ).then((value) => addNote(value),);
   }
 
-  void addNewNote(String value) {
-    notes.add(value);
-    setState(() {
-
-    });
+  addNote(Note value) {
+    myNote.add(value);
+    setState(() {});
   }
 
-   void editNote(int index) {
-     Navigator.push(context, MaterialPageRoute(
-       builder: (context) => EditNoteScreen(title: notes[index],),)).then((value) => updateCurrentNote(index, value));
-   }
+  void editNote(int index) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) =>
+          EditNoteScreen(note: myNote[index]),
+    ),
 
-  void updateCurrentNote(int index, value) {
-    notes[index] = value;
-    setState(() {
+    ).then((value) => ubdateCurrentNote(index, value));
+  }
 
-    });
+  ubdateCurrentNote(int index, value) {
+    myNote[index] = value;
+    setState(() {});
+  }
+
+  void isImportant() {
+    if (isChecked == true) {
+      Visibility(
+        visible: isChecked,
+        child: Text(
+          'This is an important note',
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+    else {
+      return;
+    }
   }
 }

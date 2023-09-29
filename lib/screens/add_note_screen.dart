@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes/colors.dart';
-
+import 'package:notes/color.dart';
+import 'package:notes/model/note.dart';
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
 
@@ -10,8 +10,13 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final titleController = TextEditingController();
- final formKey = GlobalKey<FormState>();
+  final contentController = TextEditingController();
+  final imageController = TextEditingController();
 
+  final formKey = GlobalKey<FormState>();
+ bool favorite = false;
+bool isChecked = false;
+String? saveTitle;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,15 +26,45 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         padding:  EdgeInsets.all(10),
         child: Form(
           key: formKey,
-          child: Column(children: [
+          child: ListView(children: [
+          Container(
+          padding: EdgeInsets.all(10),
+          child:
+            Checkbox(
+              activeColor: Colors.green,
+                value: isChecked,
+                onChanged: (value) {
+                  setState(() {
+                    isChecked = value!;
+                    if(value == isChecked){
+                      saveTitle = 'This Is Important Note';
+                    }
+                  });
+                }
+            ),
+            ),
+            TextFormField(
+            controller: imageController,
+            textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(border: OutlineInputBorder(),
+              label: Text("Enter URL"),
+            ),
+                validator: (value) {
+                  if(!value!.startsWith('https') && value.startsWith(" ")){
+                    return "invalid URL";
+                  }
+                  return null;
+                }
+            ),
+
             SizedBox(height: 10),
             TextFormField(
               controller: titleController,
-              textInputAction: TextInputAction.done,
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(border: OutlineInputBorder(),
               label: Text("tittle"),
-
             ),
             validator: (value) {
                 if(value!.isEmpty){
@@ -37,7 +72,24 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 }
                 return null;
             }
+            ),
 
+            SizedBox(height: 10),
+
+            TextFormField(
+              maxLines: 5,
+                controller: contentController,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(border: OutlineInputBorder(),
+                  label: Text("content"),
+                ),
+                validator: (value) {
+                  if(value!.isEmpty){
+                    return "Enter content";
+                  }
+                  return null;
+                }
             ),
             SizedBox(height: 20,),
             SizedBox(
@@ -47,8 +99,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               style: ElevatedButton.styleFrom(
                   shape: StadiumBorder(),backgroundColor: mainColor,),),
             ),
-          ],),
-        ),
+],)
+            ),
+
       ),
     );
   }
@@ -57,6 +110,15 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       return;
     }
     String title = titleController.text;
-    Navigator.pop(context, title);
+    String content = contentController.text;
+    String image = imageController.text;
+    String checked = saveTitle.toString();
+    final note = Note(title, content,image,checked);
+
+    Navigator.pop(context,note);
   }
-}
+
+
+  }
+
+
