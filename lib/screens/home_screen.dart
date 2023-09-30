@@ -66,21 +66,24 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8),
             child:
+                myNote[index].saveTitle == 'null' ?
+                    SizedBox():
             Text(
               myNote[index].saveTitle,
               style: TextStyle(
                   color:
-                  myNote[index].saveTitle == 'null'
-                      ? contaierColor :
                   Colors.red,
                   fontWeight: FontWeight.w500,
                   fontSize: 20),),
           ),
+         myNote[index].image.isEmpty ?
+         SizedBox() :
           Image.network(
             myNote[index].image,
             width:double.infinity,
             height: 150,
             fit: BoxFit.fill,),
+
           Padding(
             padding: const EdgeInsets.all(8),
             child:

@@ -17,6 +17,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
  bool favorite = false;
 bool isChecked = false;
 String? saveTitle;
+String? image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,13 +51,8 @@ String? saveTitle;
             decoration: InputDecoration(border: OutlineInputBorder(),
               label: Text("Enter URL"),
             ),
-                validator: (value) {
-                  if(!value!.startsWith('https') && value.startsWith(" ")){
-                    return "invalid URL";
-                  }
-                  return null;
-                }
             ),
+
 
             SizedBox(height: 10),
             TextFormField(
@@ -117,8 +113,6 @@ String? saveTitle;
 
     Navigator.pop(context,note);
   }
-
-
   }
 
 
