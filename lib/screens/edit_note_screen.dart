@@ -55,12 +55,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
             decoration: InputDecoration(border: OutlineInputBorder(),
               label: Text("Enter URL"),
             ),
-                validator: (value) {
-                  if(!value!.startsWith('https')){
-                    return "invalid URL";
-                  }
-                  return null;
-                }
             ),
             SizedBox(height: 10),
             TextFormField(

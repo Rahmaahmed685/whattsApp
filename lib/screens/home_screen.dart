@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Note> myNote = [
-    Note("title1", "content","https://st3.depositphotos.com/3433891/31776/i/450/depositphotos_317769338-stock-photo-young-hispanic-cool-woman-blue.jpg "),
+    Note("title", "content","https://st3.depositphotos.com/3433891/31776/i/450/depositphotos_317769338-stock-photo-young-hispanic-cool-woman-blue.jpg"),
   ];
   bool isChecked = false;
 
@@ -73,8 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                   color:
                   Colors.red,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20),),
+                  fontWeight: FontWeight.w700,
+                ),
+                ),
           ),
          myNote[index].image.isEmpty ?
          SizedBox() :

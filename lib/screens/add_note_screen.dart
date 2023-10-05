@@ -31,19 +31,19 @@ String? image;
           Container(
           padding: EdgeInsets.all(10),
           child:
-            Checkbox(
-              activeColor: Colors.green,
-                value: isChecked,
-                onChanged: (value) {
-                  setState(() {
-                    isChecked = value!;
-                    if(value == isChecked){
-                      saveTitle = 'This Is Important Note';
-                    }
-                  });
-                }
-            ),
-            ),
+          Checkbox(
+                activeColor: Colors.green,
+                  value: isChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      isChecked = value!;
+                      if(value == isChecked){
+                        saveTitle = 'This Is Important Note';
+                      }
+                    });
+                  }
+              ),
+          ),
             TextFormField(
             controller: imageController,
             textInputAction: TextInputAction.next,
