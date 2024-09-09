@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "977747776351",
+    "project_id": "whatts-a7682",
+    "storage_bucket": "whatts-a7682.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977747776351:android:572c42de93ec0c1dc15cea",
+        "android_client_info": {
+          "package_name": "com.rahmaahmed.notes.notes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwLh6vhAo3Wqx6clQ4vrskVF5aSr13SwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
