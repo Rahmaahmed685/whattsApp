@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/core/colors/colors.dart';
-import 'package:notes/screens/otp.dart';
 import 'package:notes/widget/app_text.dart';
+
+import 'otp.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

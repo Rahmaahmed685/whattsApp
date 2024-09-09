@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whats_app/core/colors/colors.dart';
 
+import '../core/colors/colors.dart';
 import 'app_text.dart';
 
 

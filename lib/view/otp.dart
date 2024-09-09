@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes/core/colors/colors.dart';
-import 'package:notes/screens/send_otp.dart';
-
+import 'package:notes/view/send_otp.dart';
 import '../controller.dart';
 import '../widget/app_text.dart';
 import 'home_screen.dart';
@@ -48,6 +47,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],),
           SizedBox(height: 300,),
           ElevatedButton(onPressed: () {
+            sentCode();
             Navigator.push(context, MaterialPageRoute(
                 builder: (context)=> HomeScreen()));
           },
@@ -76,24 +76,20 @@ void phoneAuth() async{
     },
   );
 }
-sentCode () async {
+ void  sentCode () async {
     try{
       String smsCode = c1.text+c2.text+c3.text+c4.text+c5.text+c6.text;
-
-    // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential credential =
+      PhoneAuthCredential credential =
     PhoneAuthProvider.credential(
         verificationId: verifid!, smsCode: smsCode);
-
-    // Sign the user in (or link) with the credential
-    await auth.signInWithCredential(credential).then((Value){
-      if(Value.user != null){
+      await auth.signInWithCredential(credential).then((Value){
+      // if(Value.user != null){
         Navigator.push(context, MaterialPageRoute(
             builder: (context)=> HomeScreen()));
-      }
+
     });}
     catch(ex){
-      print('correct = false');
+      print('correct = $ex');
     }
   }
 }
